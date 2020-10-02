@@ -1,0 +1,9 @@
+const config = {
+    apiKey: "AIzaSyBsLhUN64akTd3CR-TTQRmoG5WE6PAzyEY",
+    authDomain: "https://stokbarang-a5ca9.firebaseapp.com",
+    databaseURL: "https://stokbarang-a5ca9.firebaseio.com",
+    projectId: "stokbarang-a5ca9",
+    storeBucket: "https://stokbarang-a5ca9.appspot.com",
+    messagingSenderId: "567346311466"
+};
+firebase.initializeApp(config);
