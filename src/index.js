@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./store/reducers/rootReducer";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import thunk from "redux-thunk";
 
 import {
@@ -14,7 +14,11 @@ import {
   reduxFirestore,
   getFirestore,
 } from "redux-firestore";
-import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
+import {
+  ReactReduxFirebaseProvider,
+  getFirebase,
+  isLoaded,
+} from "react-redux-firebase";
 import firebase from "./config/firebaseConfig";
 import "firebase/firestore";
 
@@ -39,11 +43,30 @@ const rffProps = {
   createFirestoreInstance,
 };
 
+function AuthIsLoaded({ children }) {
+  const auth = useSelector((state) => state.firebaseReducer.auth);
+  if (!isLoaded(auth))
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 50,
+          fontSize: 20,
+        }}
+      >
+        Loading...
+      </div>
+    );
+  return children;
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rffProps}>
-        <App />
+        <AuthIsLoaded>
+          <App />
+        </AuthIsLoaded>
       </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
